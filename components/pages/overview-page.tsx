@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
@@ -14,9 +15,52 @@ import {
   Globe,
   Heart,
   Settings,
+  Download,
+  RefreshCw,
+  Filter,
+  Calendar,
+  Bell,
+  FileText,
 } from "lucide-react"
 
 export function OverviewPage() {
+  const [isRefreshing, setIsRefreshing] = useState(false)
+  const [showFilters, setShowFilters] = useState(false)
+  const [selectedTimeframe, setSelectedTimeframe] = useState("monthly")
+
+  const handleRefresh = () => {
+    setIsRefreshing(true)
+    // Simulate data refresh
+    setTimeout(() => setIsRefreshing(false), 2000)
+  }
+
+  const handleExportReport = () => {
+    // Simulate report generation
+    const reportData = {
+      timestamp: new Date().toISOString(),
+      totalWorkforce: 4250,
+      attritionRate: 8.4,
+      engagementScore: 81,
+      hrROI: 5.5,
+    }
+
+    const blob = new Blob([JSON.stringify(reportData, null, 2)], { type: "application/json" })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = `hr-executive-report-${new Date().toISOString().split("T")[0]}.json`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }
+
+  const handleQuickNavigation = (section: string) => {
+    // In a real app, this would navigate to the specific section
+    console.log(`[v0] Navigating to ${section} section`)
+    // You could use router.push() here in a real implementation
+  }
+
   return (
     <div className="space-y-6">
       {/* Page Header */}
@@ -27,19 +71,66 @@ export function OverviewPage() {
         </div>
         <div className="flex items-center gap-2">
           <Badge variant="outline" className="text-sm">
-            Last updated: 2 hours ago
+            Last updated: {isRefreshing ? "Updating..." : "2 hours ago"}
           </Badge>
-          <Button size="sm">Generate Report</Button>
+          <Button size="sm" variant="outline" onClick={() => setShowFilters(!showFilters)}>
+            <Filter className="w-4 h-4 mr-2" />
+            Filters
+          </Button>
+          <Button size="sm" variant="outline" onClick={handleRefresh} disabled={isRefreshing}>
+            <RefreshCw className={`w-4 h-4 mr-2 ${isRefreshing ? "animate-spin" : ""}`} />
+            Refresh
+          </Button>
+          <Button size="sm" onClick={handleExportReport}>
+            <Download className="w-4 h-4 mr-2" />
+            Export Report
+          </Button>
         </div>
       </div>
+
+      {showFilters && (
+        <Card className="bg-muted/50">
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <label className="text-sm font-medium">Timeframe:</label>
+                <select
+                  value={selectedTimeframe}
+                  onChange={(e) => setSelectedTimeframe(e.target.value)}
+                  className="px-3 py-1 border rounded-md text-sm"
+                >
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="quarterly">Quarterly</option>
+                  <option value="yearly">Yearly</option>
+                </select>
+              </div>
+              <Button size="sm" variant="outline">
+                <Calendar className="w-4 h-4 mr-2" />
+                Custom Range
+              </Button>
+              <Button size="sm" variant="outline">
+                <Bell className="w-4 h-4 mr-2" />
+                Set Alerts
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Critical Alerts */}
       <Card className="border-destructive/50 bg-destructive/5">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-destructive">
-            <AlertTriangle className="h-5 w-5" />
-            Critical Attention Required
-          </CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-2 text-destructive">
+              <AlertTriangle className="h-5 w-5" />
+              Critical Attention Required
+            </CardTitle>
+            <Button size="sm" variant="outline" className="text-destructive border-destructive bg-transparent">
+              <FileText className="w-4 h-4 mr-2" />
+              Action Plan
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -354,27 +445,51 @@ export function OverviewPage() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            <Button variant="outline" className="h-20 flex flex-col items-center gap-2 bg-transparent">
+            <Button
+              variant="outline"
+              className="h-20 flex flex-col items-center gap-2 bg-transparent hover:bg-primary/10 transition-colors"
+              onClick={() => handleQuickNavigation("workforce")}
+            >
               <Globe className="h-5 w-5" />
               <span className="text-xs">Workforce</span>
             </Button>
-            <Button variant="outline" className="h-20 flex flex-col items-center gap-2 bg-transparent">
+            <Button
+              variant="outline"
+              className="h-20 flex flex-col items-center gap-2 bg-transparent hover:bg-primary/10 transition-colors"
+              onClick={() => handleQuickNavigation("lifecycle")}
+            >
               <Users className="h-5 w-5" />
               <span className="text-xs">Lifecycle</span>
             </Button>
-            <Button variant="outline" className="h-20 flex flex-col items-center gap-2 bg-transparent">
+            <Button
+              variant="outline"
+              className="h-20 flex flex-col items-center gap-2 bg-transparent hover:bg-primary/10 transition-colors"
+              onClick={() => handleQuickNavigation("performance")}
+            >
               <TrendingUp className="h-5 w-5" />
               <span className="text-xs">Performance</span>
             </Button>
-            <Button variant="outline" className="h-20 flex flex-col items-center gap-2 bg-transparent">
+            <Button
+              variant="outline"
+              className="h-20 flex flex-col items-center gap-2 bg-transparent hover:bg-primary/10 transition-colors"
+              onClick={() => handleQuickNavigation("compensation")}
+            >
               <DollarSign className="h-5 w-5" />
               <span className="text-xs">Compensation</span>
             </Button>
-            <Button variant="outline" className="h-20 flex flex-col items-center gap-2 bg-transparent">
+            <Button
+              variant="outline"
+              className="h-20 flex flex-col items-center gap-2 bg-transparent hover:bg-primary/10 transition-colors"
+              onClick={() => handleQuickNavigation("systems")}
+            >
               <Settings className="h-5 w-5" />
               <span className="text-xs">Systems</span>
             </Button>
-            <Button variant="outline" className="h-20 flex flex-col items-center gap-2 bg-transparent">
+            <Button
+              variant="outline"
+              className="h-20 flex flex-col items-center gap-2 bg-transparent hover:bg-primary/10 transition-colors"
+              onClick={() => handleQuickNavigation("culture")}
+            >
               <Heart className="h-5 w-5" />
               <span className="text-xs">Culture</span>
             </Button>

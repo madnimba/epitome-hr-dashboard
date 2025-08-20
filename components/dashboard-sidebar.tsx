@@ -25,76 +25,65 @@ const navigationItems = [
     id: "overview",
     label: "Executive Overview",
     icon: LayoutDashboard,
-    description: "Key metrics and insights",
   },
   {
     id: "workforce",
-    label: "Global Workforce & Mobility",
+    label: "Global Workforce",
     icon: Globe,
-    description: "Workforce distribution and mobility",
   },
   {
     id: "lifecycle",
-    label: "Employee Lifecycle Navigator",
+    label: "Employee Lifecycle",
     icon: Users,
-    description: "Journey from hire to exit",
   },
   {
     id: "performance",
-    label: "Performance & Development",
+    label: "Performance",
     icon: TrendingUp,
-    description: "Performance tracking and growth",
   },
   {
     id: "recruitment",
-    label: "Recruitment & Onboarding",
+    label: "Recruitment",
     icon: UserPlus,
-    description: "Talent acquisition and integration",
   },
   {
     id: "compensation",
-    label: "Compensation & Rewards",
+    label: "Compensation",
     icon: DollarSign,
-    description: "Pay equity and rewards",
   },
   {
     id: "learning",
     label: "Learning & Development",
     icon: BookOpen,
-    description: "Skills development and career growth",
   },
   {
     id: "systems",
-    label: "HR Systems & Automation",
+    label: "HR Systems",
     icon: Settings,
-    description: "Digital adoption and compliance",
   },
   {
     id: "culture",
-    label: "Culture, ESG & Strategy",
+    label: "Culture & ESG",
     icon: Heart,
-    description: "Culture integration and ESG",
   },
 ]
 
 export function DashboardSidebar({ activeTab, onTabChange }: DashboardSidebarProps) {
   return (
-    <div className="w-80 bg-sidebar border-r border-sidebar-border flex flex-col">
-      {/* Logo and Company Info */}
+    <div className="w-64 bg-sidebar border-r border-sidebar-border flex flex-col corporate-shadow">
       <div className="p-6 border-b border-sidebar-border">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-            <Building2 className="w-6 h-6 text-primary-foreground" />
+          <div className="w-10 h-10 bg-sidebar-accent rounded-lg flex items-center justify-center corporate-shadow">
+            <Building2 className="w-6 h-6 text-sidebar-accent-foreground" />
           </div>
           <div>
-            <h1 className="text-xl font-sans font-bold text-sidebar-foreground">FutureTech</h1>
-            <p className="text-sm text-muted-foreground">HR Executive Dashboard</p>
+            <h1 className="text-lg font-sans font-bold text-sidebar-foreground">FutureTech</h1>
+            <p className="text-xs text-sidebar-foreground/70 font-medium">Executive Dashboard</p>
           </div>
         </div>
       </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-2">
+      <nav className="flex-1 p-3 space-y-1">
         {navigationItems.map((item) => {
           const Icon = item.icon
           const isActive = activeTab === item.id
@@ -104,29 +93,26 @@ export function DashboardSidebar({ activeTab, onTabChange }: DashboardSidebarPro
               key={item.id}
               variant={isActive ? "default" : "ghost"}
               className={cn(
-                "w-full justify-start h-auto p-4 text-left",
+                "w-full justify-start h-11 px-3 text-left font-medium",
                 isActive
-                  ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                  : "text-sidebar-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground",
+                  ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm"
+                  : "text-sidebar-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground transition-colors",
               )}
               onClick={() => onTabChange(item.id)}
             >
-              <div className="flex items-start gap-3">
-                <Icon className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                <div className="flex-1 min-w-0">
-                  <div className="font-medium text-sm leading-tight">{item.label}</div>
-                  <div className="text-xs opacity-70 mt-1 leading-tight">{item.description}</div>
-                </div>
+              <div className="flex items-center gap-3">
+                <Icon className="w-4 h-4 flex-shrink-0" />
+                <span className="text-sm font-medium truncate">{item.label}</span>
               </div>
             </Button>
           )
         })}
       </nav>
 
-      {/* Footer */}
-      <div className="p-4 border-t border-sidebar-border">
-        <div className="text-xs text-muted-foreground text-center">
-          Total Employees: <span className="font-semibold text-sidebar-foreground">4,250</span>
+      <div className="p-4 border-t border-sidebar-border bg-sidebar/50">
+        <div className="text-xs text-sidebar-foreground/70 text-center">
+          <div className="font-medium">Total Employees</div>
+          <div className="text-lg font-bold text-sidebar-foreground mt-1">4,250</div>
         </div>
       </div>
     </div>
