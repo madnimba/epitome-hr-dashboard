@@ -2,75 +2,17 @@
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import {
-  Globe,
-  Users,
-  TrendingUp,
-  DollarSign,
-  Settings,
-  Heart,
-  Building2,
-  LayoutDashboard,
-  UserPlus,
-  BookOpen,
-} from "lucide-react"
+import { Building2 } from "lucide-react"
+import { navigationItems } from "@/components/navigation"
 
 interface DashboardSidebarProps {
   activeTab: string
   onTabChange: (tab: string) => void
 }
 
-const navigationItems = [
-  {
-    id: "overview",
-    label: "Executive Overview",
-    icon: LayoutDashboard,
-  },
-  {
-    id: "workforce",
-    label: "Global Workforce",
-    icon: Globe,
-  },
-  {
-    id: "lifecycle",
-    label: "Employee Lifecycle",
-    icon: Users,
-  },
-  {
-    id: "performance",
-    label: "Performance",
-    icon: TrendingUp,
-  },
-  {
-    id: "recruitment",
-    label: "Recruitment",
-    icon: UserPlus,
-  },
-  {
-    id: "compensation",
-    label: "Compensation",
-    icon: DollarSign,
-  },
-  {
-    id: "learning",
-    label: "Learning & Development",
-    icon: BookOpen,
-  },
-  {
-    id: "systems",
-    label: "HR Systems",
-    icon: Settings,
-  },
-  {
-    id: "culture",
-    label: "Culture & ESG",
-    icon: Heart,
-  },
-]
-
 export function DashboardSidebar({ activeTab, onTabChange }: DashboardSidebarProps) {
   return (
-    <div className="w-64 bg-sidebar border-r border-sidebar-border flex flex-col corporate-shadow">
+    <div className="hidden lg:flex w-64 bg-sidebar border-r border-sidebar-border flex-col corporate-shadow flex-shrink-0">
       <div className="p-6 border-b border-sidebar-border">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-sidebar-accent rounded-lg flex items-center justify-center corporate-shadow">

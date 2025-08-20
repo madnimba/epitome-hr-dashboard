@@ -11,21 +11,50 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Search, Bell, Settings, LogOut, User } from "lucide-react"
+import { Search, Bell, Settings, LogOut, User, ChevronDown } from "lucide-react"
+import { navigationItems } from "@/components/navigation"
 
-export function DashboardHeader() {
+interface DashboardHeaderProps {
+  activeTab?: string
+  onTabChange?: (tab: string) => void
+}
+
+export function DashboardHeader({ activeTab, onTabChange }: DashboardHeaderProps) {
   return (
-    <header className="h-16 bg-background border-b border-border flex items-center justify-between px-6">
+    <header className="h-16 bg-background border-b border-border flex items-center justify-between px-3 sm:px-6">
       {/* Search */}
-      <div className="flex-1 max-w-md">
+      <div className="hidden md:block flex-1 max-w-md">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
           <Input placeholder="Search employees, metrics, reports..." className="pl-10 bg-muted/50" />
         </div>
       </div>
 
+      {/* Mobile/Tablet Nav Dropdown (visible when sidebar is hidden) */}
+      <div className="lg:hidden">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="sm" className="gap-2">
+              {navigationItems.find((n) => n.id === activeTab)?.label || "Navigate"}
+              <ChevronDown className="w-4 h-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="w-56">
+            {navigationItems.map((item) => {
+              const Icon = item.icon
+              return (
+                <DropdownMenuItem key={item.id} onClick={() => onTabChange && onTabChange(item.id)}>
+                  <Icon className="mr-2 h-4 w-4" />
+                  <span>{item.label}</span>
+                </DropdownMenuItem>
+              )
+            })}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
       {/* Right side actions */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 sm:gap-4">
         {/* Notifications */}
         <Button variant="ghost" size="icon" className="relative">
           <Bell className="w-5 h-5" />

@@ -37,12 +37,12 @@ export function PerformancePage() {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
-        <div>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
           <h1 className="text-3xl font-sans font-bold text-foreground">Performance, Engagement & Development</h1>
           <p className="text-muted-foreground mt-1">Track workforce effectiveness and leadership accountability</p>
         </div>
-        <Badge variant="outline" className="text-sm">
+        <Badge variant="outline" className="text-sm w-fit">
           Last updated: 30 minutes ago
         </Badge>
       </div>

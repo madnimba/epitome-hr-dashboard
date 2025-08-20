@@ -42,11 +42,11 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-dvh bg-background">
       <DashboardSidebar activeTab={activeTab} onTabChange={setActiveTab} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <DashboardHeader />
-        <main className="flex-1 overflow-y-auto p-6">{renderActivePage()}</main>
+        <DashboardHeader activeTab={activeTab} onTabChange={setActiveTab} />
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6">{renderActivePage()}</main>
       </div>
     </div>
   )

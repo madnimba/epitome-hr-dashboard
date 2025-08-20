@@ -27,12 +27,12 @@ export function CompensationPage() {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
-        <div>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
           <h1 className="text-3xl font-sans font-bold text-foreground">Compensation, Rewards & Equity</h1>
           <p className="text-muted-foreground mt-1">Monitor pay fairness, competitiveness, and incentive structures</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
           <Badge variant="outline" className="text-sm">
             Last updated: 1 hour ago
           </Badge>

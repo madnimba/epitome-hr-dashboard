@@ -53,7 +53,7 @@ export function HRSystemsPage() {
 
   return (
     <div className="space-y-6">
-      <div>
+      <div className="min-w-0">
         <h1 className="text-3xl font-sans font-bold text-foreground">HR Systems, Automation & Compliance</h1>
         <p className="text-muted-foreground mt-1">Digital adoption, automation ROI, and compliance risk management</p>
       </div>
