@@ -63,6 +63,11 @@ export const navigationItems: NavigationItem[] = [
     label: "Culture & ESG",
     icon: Heart,
   },
+  {
+    id: "appendix",
+    label: "Appendix",
+    icon: Building2,
+  },
 ]
 
 

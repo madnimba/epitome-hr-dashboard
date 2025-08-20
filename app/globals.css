@@ -157,4 +157,27 @@
   .hr-label {
     @apply text-sm font-medium text-muted-foreground uppercase tracking-wide;
   }
+
+  /* Subtle, professional multi-layer shadow for cards/containers */
+  .corporate-shadow {
+    box-shadow:
+      0 1px 1px oklch(0 0 0 / 0.04),
+      0 4px 8px oklch(0 0 0 / 0.05),
+      0 12px 24px oklch(0 0 0 / 0.06);
+  }
+
+  /* Branding accent with restrained gradient text matching theme */
+  .brand-accent {
+    background-image: linear-gradient(135deg, var(--primary), color-mix(in oklch, var(--secondary) 70%, white));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* High-contrast chart utility colors aligned to theme (for optional use) */
+  .chart-blue { color: var(--chart-1); fill: var(--chart-1); }
+  .chart-green { color: var(--chart-2); fill: var(--chart-2); }
+  .chart-indigo { color: var(--chart-3); fill: var(--chart-3); }
+  .chart-amber { color: var(--chart-4); fill: var(--chart-4); }
+  .chart-purple { color: var(--chart-5); fill: var(--chart-5); }
 }

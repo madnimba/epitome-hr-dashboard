@@ -1,7 +1,6 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   DropdownMenu,
@@ -11,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Search, Bell, Settings, LogOut, User, ChevronDown } from "lucide-react"
+import { Bell, Settings, LogOut, User, ChevronDown } from "lucide-react"
 import { navigationItems } from "@/components/navigation"
 
 interface DashboardHeaderProps {
@@ -22,11 +21,13 @@ interface DashboardHeaderProps {
 export function DashboardHeader({ activeTab, onTabChange }: DashboardHeaderProps) {
   return (
     <header className="h-16 bg-background border-b border-border flex items-center justify-between px-3 sm:px-6">
-      {/* Search */}
-      <div className="hidden md:block flex-1 max-w-md">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-          <Input placeholder="Search employees, metrics, reports..." className="pl-10 bg-muted/50" />
+      {/* Branding */}
+      <div className="flex items-center gap-3 min-w-0">
+        <div className="leading-tight">
+          <div className="text-base sm:text-lg font-sans font-semibold tracking-tight">FutureTech HR Dashboard</div>
+          <div className="text-xs sm:text-sm text-muted-foreground">
+            Designed by <span className="brand-accent font-medium">Arctic Wolves</span>
+          </div>
         </div>
       </div>
 
@@ -42,10 +43,25 @@ export function DashboardHeader({ activeTab, onTabChange }: DashboardHeaderProps
           <DropdownMenuContent align="start" className="w-56">
             {navigationItems.map((item) => {
               const Icon = item.icon
+              const isAppendix = item.id === "appendix"
               return (
-                <DropdownMenuItem key={item.id} onClick={() => onTabChange && onTabChange(item.id)}>
+                <DropdownMenuItem 
+                  key={item.id} 
+                  onClick={() => {
+                    if (isAppendix) {
+                      window.open("https://docs.google.com/document/d/1JHO3fLIJZ27MKM4xkRGoVWgUphfRoJTNpfBSx0CMhks/edit?usp=sharing", "_blank")
+                    } else {
+                      onTabChange && onTabChange(item.id)
+                    }
+                  }}
+                >
                   <Icon className="mr-2 h-4 w-4" />
                   <span>{item.label}</span>
+                  {isAppendix && (
+                    <svg className="w-3 h-3 ml-auto opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  )}
                 </DropdownMenuItem>
               )
             })}
